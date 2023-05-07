@@ -1,0 +1,15 @@
+apiVersion: dynamodb.services.k8s.aws/v1alpha1
+kind: Table
+metadata:
+  name: user
+  annotations:
+   services.k8s.aws/region: us-east-1
+spec:
+  attributeDefinitions:
+    - attributeName: email
+      attributeType: S
+  billingMode: PAY_PER_REQUEST
+  keySchema:
+    - attributeName: email
+      keyType: HASH
+  tableName: user

@@ -1,0 +1,37 @@
+apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
+kind: API
+metadata:
+  name: ack-demo-apigw-httpapi
+spec:
+  name: ack-demo-apigw-httpapi
+  protocolType: HTTP
+
+---
+
+apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
+kind: Integration
+metadata:
+  name: ack-demo-apigw-integration
+spec:
+  apiRef:
+    from:
+      name: ack-demo-apigw-httpapi
+  integrationType: AWS_PROXY
+  integrationMethod: POST
+  integrationURI: arn:aws:lambda:us-east-1:AWS_ACCOUNT_ID:function:demo-dynamodb-func-ack
+  payloadFormatVersion: "2.0"
+
+---
+
+
+apiVersion: apigatewayv2.services.k8s.aws/v1alpha1
+kind: Stage
+metadata:
+  name: demo-stage
+spec:
+  apiRef:
+    from:
+      name: ack-demo-apigw-httpapi
+  stageName: demo-stage
+  autoDeploy: true
+  description: "demo stage for http api"

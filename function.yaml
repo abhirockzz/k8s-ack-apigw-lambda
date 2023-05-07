@@ -1,0 +1,18 @@
+apiVersion: lambda.services.k8s.aws/v1alpha1
+kind: Function
+metadata:
+ name: demo-apigw-dynamodb-func-ack
+ annotations:
+   services.k8s.aws/region: us-east-1
+spec:
+ architectures:
+  - x86_64
+ name: demo-apigw-dynamodb-func-ack
+ packageType: Image
+ code:
+     imageURI: AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/demo-apigw-dynamodb-func-ack:latest
+ environment:
+    variables:
+      TABLE_NAME: user
+ role: arn:aws:iam::AWS_ACCOUNT_ID:role/demo-apigw-dynamodb-func-ack-role
+ description: A function created by ACK lambda-controller
